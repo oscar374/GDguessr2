@@ -1,9 +1,13 @@
 import Image from "next/image";
+import NavBar from "./components/navbar";
 
 export default function Home() {
   return (
     <div className="">
-      <h1 className="text-3xl font-bold underline">GDguessr frontend</h1>
+      <NavBar />
+      <div className="">
+        
+      </div>
     </div>
   );
 }
