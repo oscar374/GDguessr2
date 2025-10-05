@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import random
 import requests
 import cv2
@@ -6,6 +7,15 @@ import yt_dlp as youtube_dl
 import base64
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 def get_random_frame_from_video(url, skip_frames=300):
     cap = cv2.VideoCapture(url)
@@ -41,7 +51,7 @@ async def get_question(min: int, max: int):
             formats = info_dict.get('formats', [])
             video_url = None
             for f in formats:
-                if f.get('format_note') == '144p':
+                if f.get('format_note') == '360p':
                     video_url = f.get('url')
                     break
             if video_url:
