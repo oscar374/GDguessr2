@@ -16,19 +16,33 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+Min_video_start = 0.15
+Max_video_end = 0.85
 
-def get_random_frame_from_video(url, skip_frames=300):
+
+def get_random_frame_from_video(url, skip_frames=45):
     cap = cv2.VideoCapture(url)
     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     if frame_count == 0:
         cap.release()
         return None
-    random_frame_number = random.randint(0, frame_count // skip_frames) * skip_frames
+
+    start_frame = int(frame_count * Min_video_start)
+    end_frame = int(frame_count * Max_video_end) 
+    if start_frame >= end_frame:
+        start_frame = 0
+        end_frame = frame_count - 1
+
+    num_frames_in_range = (end_frame - start_frame) // skip_frames
+    random_frame_number = start_frame + random.randint(0, num_frames_in_range) * skip_frames
+
     cap.set(cv2.CAP_PROP_POS_FRAMES, random_frame_number)
     ret, frame = cap.read()
     cap.release()
+    
     if not ret:
         return None
+
     _, buffer = cv2.imencode(".jpg", frame)
     return base64.b64encode(buffer).decode("utf-8")
 
@@ -39,6 +53,7 @@ async def get_question(min: int, max: int):
     pointerCrateJSON = pointerCrateResponse.json()
     level = next((item for item in pointerCrateJSON if item["position"] == placement), None)
     levelName = level["name"] if level else "[ERROR] Level not found"
+    print("Level fetched:", levelName)
     allLevels = [item["name"] for item in pointerCrateJSON]
     youtubeLink = level["video"] if level and "video" in level else None
     frameURL = None
@@ -51,7 +66,7 @@ async def get_question(min: int, max: int):
             formats = info_dict.get('formats', [])
             video_url = None
             for f in formats:
-                if f.get('format_note') == '360p':
+                if f.get('format_note') == '480p':
                     video_url = f.get('url')
                     break
             if video_url:
