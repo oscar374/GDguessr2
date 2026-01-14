@@ -160,14 +160,18 @@ export default function Game() {
                         </form>
                         <style jsx>{`
                             .animate-pulse-fade {
-                                animation: pulseFade 1s ease;
+                                animation: pulseFade 0.8s ease forwards;
                             }
                             @keyframes pulseFade {
                                 0% {
                                     opacity: 1;
                                 }
+                                90% {
+                                    opacity: 0.1;
+                                }
                                 100% {
                                     opacity: 0;
+                                    pointer-events: none;
                                 }
                             }
                         `}</style>
