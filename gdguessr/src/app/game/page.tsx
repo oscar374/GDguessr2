@@ -44,7 +44,7 @@ export default function Game() {
 
     const fetchQuestions = async (maxLevelValue: number) => {
         try {
-            const response = await fetch(`http://localhost:8000/question/1/${maxLevelValue}`);
+            const response = await fetch(`http://192.168.0.134:8000/question/1/${maxLevelValue}`);
             if (!response.ok) {
                 throw new Error("Failed to fetch questions");
             }
@@ -109,9 +109,9 @@ export default function Game() {
     };
 
     return (
-        <div className="">
+        <div className="overflow-hidden h-screen">
             <NavBar />
-            <div className="w-full h-screen flex flex-col items-center justify-center">
+            <div className="w-full h-screen flex flex-col items-center justify-center overflow-hidden">
                 {loading ? (
                     <p className="text-5xl text-white select-none">Loading...</p>
                 ) : error ? (
@@ -136,11 +136,11 @@ export default function Game() {
                             )}
                         </div>
 
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className="w-full max-w-md px-4 flex flex-col gap-2 mt-2">
                             <input
                                 type="text"
                                 placeholder="Enter your guess"
-                                className="mt-4 p-2 border border-gray-400 rounded w-64 text-white"
+                                className="p-3 border-2 border-blue-400 rounded text-white bg-gray-800 text-lg placeholder-gray-400 w-full focus:outline-none focus:border-blue-600"
                                 list="suggestions"
                                 value={guess}
                                 onChange={(e) => setGuess(e.target.value)}
@@ -153,7 +153,7 @@ export default function Game() {
 
                             <button
                                 type="submit"
-                                className="ml-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer"
+                                className="p-3 bg-blue-500 text-white rounded text-lg font-semibold hover:bg-blue-600 cursor-pointer w-full"
                             >
                                 GUESS
                             </button>

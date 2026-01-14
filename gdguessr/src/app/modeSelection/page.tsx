@@ -16,12 +16,12 @@ export default function ModeSelection() {
     return (
         <>
             <NavBar />
-            <div className="w-full h-screen flex flex-col items-center justify-center">
-                <h1 className="text-white text-6xl mb-5 select-none">Select a gameMode</h1>
-                <div className="flex">
-                    <button onClick={() => handleMaxLevelChange(50)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-4 text-4xl cursor-pointer">Main</button>
-                    <button onClick={() => handleMaxLevelChange(100)} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded m-4 text-4xl cursor-pointer">Extended</button>
-                    <button onClick={() => handleMaxLevelChange(150)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-4 text-4xl cursor-pointer">Legacy</button>
+            <div className="w-full h-screen flex flex-col items-center justify-center px-4">
+                <h1 className="text-white text-4xl sm:text-5xl md:text-6xl mb-5 select-none text-center">Select a gameMode</h1>
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 w-full sm:w-auto justify-center">
+                    <button onClick={() => handleMaxLevelChange(50)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-2xl sm:text-3xl md:text-4xl cursor-pointer">Main</button>
+                    <button disabled onClick={() => handleMaxLevelChange(100)} className="bg-gray-500 text-white font-bold py-2 px-4 rounded text-2xl sm:text-3xl md:text-4xl cursor-not-allowed opacity-60">Extended</button>
+                    <button disabled onClick={() => handleMaxLevelChange(150)} className="bg-gray-500 text-white font-bold py-2 px-4 rounded text-2xl sm:text-3xl md:text-4xl cursor-not-allowed opacity-60">Legacy</button>
                 </div>
             </div>
         </>
